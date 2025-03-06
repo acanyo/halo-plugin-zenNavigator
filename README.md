@@ -7,6 +7,7 @@
 ![许可证](https://img.shields.io/badge/许可证-MIT-orange)
 
 ## 项目概述
+演示站 : [https://lik.cc/nav](https://lik.cc/nav)
 
 ZenNavigator 是一个精心设计的网站导航插件，旨在为用户提供一个简洁、美观且功能丰富的导航体验。项目采用现代化的设计理念，支持响应式布局，适配各种设备屏幕。通过分类展示网站链接，用户可以快速找到所需资源。
 
