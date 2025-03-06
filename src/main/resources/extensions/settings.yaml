@@ -1,0 +1,78 @@
+apiVersion: v1alpha1
+kind: Setting
+metadata:
+  name: plugin-ZenNavigator-settings
+spec:
+  forms:
+    - group: basics
+      label: 基本设置
+      formSchema:
+        - $formkit: text
+          label: 导航标题
+          name: navTitle
+          id: navTitle
+          key: navTitle
+          value: "Handsome主页导航"
+          help: "导航名称"
+        - $formkit: attachment
+          label: 导航Logo
+          name: navLogo
+          id: navLogo
+          key: navLogo
+          value: "https://www.lik.cc/upload/logo.png"
+          help: "网站顶部logo"
+        - $formkit: attachment
+          label: 导航背景
+          name: bgImages
+          id: bgImages
+          key: bgImages
+          value: "https://img-baofun.zhhainiao.com/pcwallpaper_ugc/preview/9b09b3e56cc7abc842f2985bafdc4c74_preview.mp4"
+          help: 为空默认白色背景，支持视频背景和图片
+        - $formkit: text
+          label: 阿里矢量图标
+          name: iconfont
+          id: iconfont
+          key: iconfont
+          validation: required
+          value: ""
+          help: "https://www.iconfont.cn/,请前往阿里矢量图标管理自己的图标"
+        - $formkit: range
+          name: transparency
+          id: transparency
+          key: transparency
+          label: '背景蒙层透明度'
+          value: 30
+          min: 0
+          step: 1
+          max: 100
+          help: $get(transparency).value
+        - $formkit: select
+          name: navCategories
+          label: 导航分类
+          multiple: true
+          clearable: true
+          searchable: true
+          action: /apis/core.halo.run/v1alpha1/linkgroups
+          requestOption:
+            method: GET
+            pageField: page
+            sizeField: size
+            totalField: total
+            itemsField: items
+            labelField: spec.displayName
+            valueField: metadata.name
+        - $formkit: checkbox
+          label: 开启灵动岛弹窗
+          name: enableSmart
+          id: enableSmart
+          key: enableSmart
+          value: true
+          help: "开启后会在导航页面增加一个灵动弹窗"
+        - $formkit: code
+          if: "$get(enableSmart).value === true"
+          name: content
+          label: 灵动岛弹窗
+          value: ""
+          language: html
+          height: 200px
+          help: 为空默认为欢迎语，支持 html 语法。

@@ -1,0 +1,24 @@
+# Refer https://docs.halo.run/developer-guide/plugin/basics/manifest
+
+apiVersion: plugin.halo.run/v1alpha1
+kind: Plugin
+metadata:
+  # The name defines how the plugin is invoked, A unique name
+  name: ZenNavigator
+spec:
+  enabled: true
+  requires: ">=2.20.0"
+  author:
+    name: Handsome
+    website: https://lik.cc
+  logo: /icon.svg
+  settingName: plugin-ZenNavigator-settings
+  configMapName: plugin-ZenNavigator-configMap
+  homepage: https://lik.cc
+  repo: https://github.com/acanyo/halo-plugin-zenNavigator
+  issues: https://github.com/acanyo/halo-plugin-zenNavigator/issues
+  displayName: "禅导航"
+  description: "化繁为简，专注所需"
+  license:
+    - name: "GPL-3.0"
+      url: "https://github.com/halo-dev/plugin-starter/blob/main/LICENSE"

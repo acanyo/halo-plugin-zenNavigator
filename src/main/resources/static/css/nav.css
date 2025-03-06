@@ -1,0 +1,227 @@
+/* 通知区域样式 */
+#notification-area {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translate(-50%, -20px);
+    z-index: 1000;
+    border-radius: 16px;
+    min-width: 320px;
+    max-width: 480px;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    will-change: transform, opacity;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 5px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+#notification-area.opacity-0 {
+    transform: translate(-50%, -30px);
+    filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+#notification-area.opacity-100 {
+    transform: translate(-50%, 0);
+    filter: blur(0);
+    opacity: 1;
+}
+
+.notification-content {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 8px;
+    line-height: 1.5;
+    scrollbar-width: thin;
+}
+
+.notification-content::-webkit-scrollbar {
+    width: 2px;
+}
+
+.notification-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.notification-content::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 1px;
+}
+
+.notification-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.dark .notification-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dark .notification-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.notification-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 4px;
+}
+
+/* 通知图标容器 */
+.notification-icon {
+    position: relative;
+    overflow: hidden;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    animation: icon-pulse 2s infinite;
+}
+
+.notification-icon i {
+    position: relative;
+    z-index: 1;
+    font-size: 1.25rem;
+    animation: icon-rotate 2s infinite;
+}
+
+/* 动画效果 */
+@keyframes icon-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+.dark .notification-icon {
+    animation: icon-pulse-dark 2s infinite;
+}
+
+@keyframes icon-pulse-dark {
+    0% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(96, 165, 250, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(96, 165, 250, 0); }
+}
+
+@keyframes icon-rotate {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(10deg); }
+    75% { transform: rotate(-10deg); }
+}
+
+@keyframes notification-in {
+    0% {
+        transform: translate(-50%, -30px) scale(0.95);
+        opacity: 0;
+        filter: blur(8px);
+    }
+    50% {
+        transform: translate(-50%, 5px) scale(1.02);
+    }
+    100% {
+        transform: translate(-50%, 0) scale(1);
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+@keyframes notification-out {
+    0% {
+        transform: translate(-50%, 0) scale(1);
+        opacity: 1;
+        filter: blur(0);
+    }
+    100% {
+        transform: translate(-50%, -30px) scale(0.95);
+        opacity: 0;
+        filter: blur(8px);
+    }
+}
+
+.notification-in {
+    animation: notification-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.notification-out {
+    animation: notification-out 0.5s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+}
+
+/* 通知按钮样式 */
+#dynamic-island {
+    position: relative;
+    overflow: hidden;
+}
+
+#dynamic-island.island-active {
+    animation: island-active 5s ease-in-out;
+}
+
+@keyframes island-active {
+    0%, 100% { transform: scale(1); }
+    10% { transform: scale(1.1); }
+    20% { transform: scale(1); }
+    30% { transform: scale(1.05); }
+    40% { transform: scale(1); }
+}
+
+#dynamic-island:hover {
+    transform: scale(1.1) translateY(-2px);
+}
+
+#dynamic-island:active {
+    transform: scale(0.95);
+}
+
+#dynamic-island i {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 关闭按钮样式 */
+#close-notification {
+    --close-bg: rgba(255, 255, 255, 0.1);
+    --close-color: rgba(255, 255, 255, 0.6);
+    --close-hover-bg: rgba(255, 255, 255, 0.2);
+    --close-hover-color: rgba(255, 255, 255, 0.9);
+    
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--close-bg);
+    color: var(--close-color);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#close-notification:hover {
+    background: var(--close-hover-bg);
+    color: var(--close-hover-color);
+    transform: rotate(90deg);
+}
+
+@media (forced-colors: active) {
+  :root {
+    --primary-color: CanvasText;
+    --primary-bg: Canvas;
+    --primary-border: CanvasText;
+  }
+  
+  .notification-icon i {
+    forced-color-adjust: none;
+  }
+  
+  .site-card:hover {
+    forced-color-adjust: none;
+  }
+  
+  .theme-toggle-button {
+    forced-color-adjust: none;
+  }
+} 

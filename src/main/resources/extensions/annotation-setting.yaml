@@ -1,0 +1,33 @@
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: my-annotation-setting
+spec:
+  targetRef:
+    group: core.halo.run
+    kind: LinkGroup
+  formSchema:
+    - $formkit: "text"
+      name: "catIcon"
+      label: "分类图标-阿里图标库"
+    - $formkit: "text"
+      name: "inTopMenu"
+      label: "是否显示顶部"
+
+---
+
+apiVersion: v1alpha1
+kind: AnnotationSetting
+metadata:
+  name: my-annotation-setting1
+spec:
+  targetRef:
+    group: core.halo.run
+    kind: Link
+  formSchema:
+    - $formkit: "text"
+      name: "catIcon2"
+      label: "二级分类图标-阿里图标库"
+    - $formkit: "text"
+      name: "catName"
+      label: "二级分类名称"
