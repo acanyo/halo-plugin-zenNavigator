@@ -93,32 +93,48 @@
     @apply transition-all duration-300;
   }
   
-  /* 移动端菜单按钮 */
-  .mobile-menu-button {
-    @apply p-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100/70 
-           dark:hover:bg-gray-800/70 transition-all duration-200;
+  /* 导航菜单 */
+  .nav-menu {
+    @apply hidden md:flex items-center space-x-6;
   }
   
-  /* 导航菜单项 */
   .nav-menu-item {
-    @apply px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-primary-50 
-           dark:hover:bg-primary-900/30 hover:text-primary-600 dark:hover:text-primary-400 
-           transition-all duration-200 font-medium relative after:absolute after:bottom-0 
-           after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-primary-500 
-           after:transition-all after:duration-300 hover:after:w-1/2;
+    @apply px-2 py-1.5 text-sm text-gray-600 dark:text-gray-300 
+           hover:text-primary-600 dark:hover:text-primary-400
+           transition-colors duration-200;
+  }
+  
+  .nav-menu-item.active {
+    @apply text-primary-600 dark:text-primary-400 font-normal;
+  }
+  
+  /* 移动端菜单按钮 */
+  .mobile-menu-button {
+    @apply md:hidden p-2 rounded-lg text-gray-700 dark:text-gray-200 
+           hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200;
   }
   
   /* 移动端菜单 */
   .mobile-menu {
-    @apply bg-white/95 dark:bg-gray-900/95 border-b border-gray-200/20 dark:border-gray-700/20 
-           animate-slide-up max-h-[70vh] overflow-y-auto;
+    @apply fixed top-16 left-0 right-0 bg-white/95 dark:bg-gray-900/95 
+           border-b border-gray-200/20 dark:border-gray-700/20 
+           animate-slide-up max-h-[80vh] overflow-y-auto backdrop-blur-md
+           transform transition-all duration-300 ease-out;
   }
   
   /* 移动端菜单项 */
   .mobile-menu-item {
-    @apply block w-full px-6 py-3 text-gray-700 dark:text-gray-200 hover:bg-primary-50 
-           dark:hover:bg-primary-900/30 hover:text-primary-600 dark:hover:text-primary-400 
-           transition-all duration-200 border-b border-gray-100/50 dark:border-gray-800/50 font-medium;
+    @apply block w-full px-6 py-3 text-gray-700 dark:text-gray-200 
+           hover:bg-primary-50/50 dark:hover:bg-primary-900/30 
+           hover:text-primary-600 dark:hover:text-primary-400 
+           transition-all duration-200 border-b border-gray-100/50 
+           dark:border-gray-800/50 font-medium active:bg-primary-100/50 
+           dark:active:bg-primary-800/30;
+  }
+  
+  .mobile-menu-item.active {
+    @apply bg-primary-50/50 dark:bg-primary-900/30 
+           text-primary-600 dark:text-primary-400;
   }
 
   /* 分类 */
