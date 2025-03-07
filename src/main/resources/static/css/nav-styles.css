@@ -111,30 +111,35 @@
   /* 移动端菜单按钮 */
   .mobile-menu-button {
     @apply md:hidden p-2 rounded-lg text-gray-700 dark:text-gray-200 
-           hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200;
+           hover:bg-gray-100/70 dark:hover:bg-gray-800/70 transition-all duration-200;
   }
   
   /* 移动端菜单 */
-  .mobile-menu {
-    @apply fixed top-16 left-0 right-0 bg-white/95 dark:bg-gray-900/95 
-           border-b border-gray-200/20 dark:border-gray-700/20 
-           animate-slide-up max-h-[80vh] overflow-y-auto backdrop-blur-md
-           transform transition-all duration-300 ease-out;
+  #mobile-menu {
+    @apply md:hidden overflow-hidden opacity-0 max-h-0;
+    transition: opacity 0.3s ease, max-height 0.3s ease;
+  }
+  
+  #mobile-menu.open {
+    @apply opacity-100;
+    max-height: calc(100vh - 4rem);
   }
   
   /* 移动端菜单项 */
   .mobile-menu-item {
-    @apply block w-full px-6 py-3 text-gray-700 dark:text-gray-200 
-           hover:bg-primary-50/50 dark:hover:bg-primary-900/30 
-           hover:text-primary-600 dark:hover:text-primary-400 
-           transition-all duration-200 border-b border-gray-100/50 
-           dark:border-gray-800/50 font-medium active:bg-primary-100/50 
-           dark:active:bg-primary-800/30;
+    @apply flex items-center px-4 py-3 rounded-lg text-gray-700 dark:text-gray-200 
+           hover:bg-gray-100/70 dark:hover:bg-gray-800/70 
+           hover:text-primary-600 dark:hover:text-primary-400
+           transition-all duration-200;
   }
   
   .mobile-menu-item.active {
-    @apply bg-primary-50/50 dark:bg-primary-900/30 
+    @apply bg-primary-50 dark:bg-primary-900/30 
            text-primary-600 dark:text-primary-400;
+  }
+  
+  .mobile-menu-item i {
+    @apply text-lg text-gray-500 dark:text-gray-400;
   }
 
   /* 分类 */

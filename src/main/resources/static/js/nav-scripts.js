@@ -137,39 +137,105 @@ function setupMobileMenu() {
   const menuButton = document.getElementById('mobile-menu-button');
   const mobileMenu = document.getElementById('mobile-menu');
   const menuIcon = document.getElementById('menu-icon');
+  
   if (!menuButton || !mobileMenu || !menuIcon) return;
   
-  const menuIcons = {
-    open: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>`,
-    close: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-           </svg>`
-  };
+  let isOpen = false;
+  let isAnimating = false;
   
-  const toggleMenu = (show) => {
-    mobileMenu.classList.toggle('hidden', !show);
-    setTimeout(() => mobileMenu.classList.toggle('opacity-0', !show), show ? 10 : 0);
-    menuIcon.innerHTML = show ? menuIcons.open : menuIcons.close;
-  };
+  // 切换菜单显示状态
+  function toggleMenu() {
+    if (isAnimating) return;
+    isAnimating = true;
+    
+    isOpen = !isOpen;
+    
+    if (isOpen) {
+      // 打开菜单
+      mobileMenu.classList.remove('hidden');
+      
+      // 等待一帧以确保DOM更新
+      requestAnimationFrame(() => {
+        mobileMenu.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        
+        // 更改图标为关闭
+        menuIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>`;
+        
+        // 动画结束后重置状态
+        setTimeout(() => {
+          isAnimating = false;
+        }, 300);
+      });
+    } else {
+      // 关闭菜单
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+      
+      // 更改图标为菜单
+      menuIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>`;
+      
+      // 等待动画完成后隐藏
+      setTimeout(() => {
+        if (!isOpen) {
+          mobileMenu.classList.add('hidden');
+        }
+        isAnimating = false;
+      }, 300);
+    }
+  }
   
-  menuButton.addEventListener('click', () => {
-    const isOpen = !mobileMenu.classList.contains('hidden');
-    toggleMenu(!isOpen);
+  // 点击菜单按钮
+  menuButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleMenu();
   });
   
-  document.addEventListener('click', (event) => {
-    if (!mobileMenu.classList.contains('hidden') && 
-        !mobileMenu.contains(event.target) && 
-        !menuButton.contains(event.target)) {
-      toggleMenu(false);
+  // 点击菜单项
+  mobileMenu.addEventListener('click', (e) => {
+    const menuItem = e.target.closest('.mobile-menu-item');
+    if (menuItem) {
+      // 设置激活状态
+      const allItems = mobileMenu.querySelectorAll('.mobile-menu-item');
+      allItems.forEach(item => item.classList.remove('active'));
+      menuItem.classList.add('active');
+      
+      // 关闭菜单
+      setTimeout(() => {
+        if (isOpen) toggleMenu();
+      }, 150);
     }
   });
   
-  mobileMenu.querySelectorAll('a').forEach(item => {
-    item.addEventListener('click', () => toggleMenu(false));
+  // 点击外部关闭
+  document.addEventListener('click', (e) => {
+    if (isOpen && !mobileMenu.contains(e.target) && !menuButton.contains(e.target)) {
+      toggleMenu();
+    }
   });
+  
+  // ESC键关闭
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) {
+      toggleMenu();
+    }
+  });
+  
+  // 窗口调整大小时关闭
+  window.addEventListener('resize', () => {
+    if (isOpen && window.innerWidth >= 768) {
+      toggleMenu();
+    }
+  });
+  
+  // 确保初始状态是隐藏的
+  mobileMenu.classList.add('hidden');
+  isOpen = false;
 }
 
 /**

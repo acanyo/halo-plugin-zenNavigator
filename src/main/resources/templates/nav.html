@@ -208,7 +208,29 @@
 <!-- 背景容器 -->
     <div class="fixed inset-0 -z-10 overflow-hidden" id="bg-container">
         <!-- 背景图片会通过JavaScript动态添加 -->
-</div>
+    </div>
+
+    <!-- 移动端导航菜单 -->
+    <div id="mobile-menu" class="fixed top-16 left-0 right-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg shadow-lg z-50 transition-all duration-300 md:hidden hidden">
+        <div class="p-4">
+            <nav class="flex flex-col space-y-2">
+                <!-- 首页 -->
+                <a href="/" class="mobile-menu-item">
+                    <i class="ri-home-5-line mr-3"></i>
+                    <span>首页</span>
+                </a>
+                
+                <!-- 分类导航 -->
+                <a th:each="category : ${navigation.categories}" 
+                   th:if="${category.inTopMenu}"
+                   th:href="'#' + ${category.id}"
+                   class="mobile-menu-item">
+                    <i th:class="${category.icon + ' mr-3'}"></i>
+                    <span th:text="${category.name}">分类名称</span>
+                </a>
+            </nav>
+        </div>
+    </div>
 
     <!-- 将后端数据传递给前端的脚本 -->
     <script th:inline="javascript">
