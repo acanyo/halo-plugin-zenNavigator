@@ -6,6 +6,10 @@
 ![版本](https://img.shields.io/badge/版本-1.0.0-green)
 ![许可证](https://img.shields.io/badge/许可证-MIT-orange)
 
+# 💬交流
+![群.png](https://www.lik.cc/upload/iShot_2025-03-03_16.03.00.png)
+
+
 ## 项目概述
 演示站 : [https://lik.cc/nav](https://lik.cc/nav)
 
