@@ -2,7 +2,6 @@ package cc.lik.zenNavigator.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -14,5 +13,4 @@ public class BaseConfig {
     private String transparency;
     private Boolean enableSmart;
     private String content;
-    private List<String> navCategories;
 }
