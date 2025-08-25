@@ -2,7 +2,8 @@ package cc.lik.zenNavigator;
 
 import static run.halo.app.extension.index.IndexAttributeFactory.simpleAttribute;
 
-import cc.lik.zenNavigator.entity.NavCategory;
+import cc.lik.zenNavigator.entity.NavGroup;
+import cc.lik.zenNavigator.entity.NavSite;
 import org.springframework.stereotype.Component;
 import run.halo.app.extension.Scheme;
 import run.halo.app.extension.SchemeManager;
@@ -30,17 +31,49 @@ public class ZenNavigatorPlugin extends BasePlugin {
 
     @Override
     public void start() {
-        schemeManager.register(NavCategory.class, indexSpecs -> {
+        schemeManager.register(NavSite.class, indexSpecs -> {
             indexSpecs.add(new IndexSpec()
                 .setName("spec.name")
                 .setIndexFunc(
-                    simpleAttribute(NavCategory.class, syncFriendPost -> syncFriendPost.getSpec().getName())));
+                    simpleAttribute(NavSite.class, site -> site.getSpec().getName())));
+        });
+        schemeManager.register(NavSite.class, indexSpecs -> {
+            indexSpecs.add(new IndexSpec()
+                .setName("spec.url")
+                .setIndexFunc(
+                    simpleAttribute(NavSite.class, site -> site.getSpec().getName())));
+        });
+        schemeManager.register(NavSite.class, indexSpecs -> {
+            indexSpecs.add(new IndexSpec()
+                .setName("spec.icon")
+                .setIndexFunc(
+                    simpleAttribute(NavSite.class, site -> site.getSpec().getName())));
+        });
+        schemeManager.register(NavSite.class, indexSpecs -> {
+            indexSpecs.add(new IndexSpec()
+                .setName("spec.description")
+                .setIndexFunc(
+                    simpleAttribute(NavSite.class, site -> site.getSpec().getName())));
+        });
+        schemeManager.register(NavGroup.class, indexSpecs -> {
+            indexSpecs.add(new IndexSpec()
+                .setName("spec.priority")
+                .setIndexFunc(
+                    simpleAttribute(NavGroup.class, group -> group.getSpec().getName())));
+        });
+        schemeManager.register(NavGroup.class, indexSpecs -> {
+            indexSpecs.add(new IndexSpec()
+                .setName("spec.name")
+                .setIndexFunc(
+                    simpleAttribute(NavGroup.class, group -> group.getSpec().getName())));
         });
     }
 
     @Override
     public void stop() {
-        Scheme categoryScheme = schemeManager.get(NavCategory.class);
-        schemeManager.unregister(categoryScheme);
+        Scheme siteScheme = schemeManager.get(NavSite.class);
+        Scheme groupScheme = schemeManager.get(NavSite.class);
+        schemeManager.unregister(siteScheme);
+        schemeManager.unregister(groupScheme);
     }
 }

@@ -50,7 +50,10 @@
     "typescript": "~5.8.3",
     "unplugin-icons": "^22.1.0",
     "vitest": "^3.2.4",
-    "vue-tsc": "^2.2.10"
+    "vue-tsc": "^2.2.10",
+    "@unocss/eslint-config": "^66.2.0",
+    "@unocss/webpack": "^66.2.0",
+    "unocss": "^66.2.0"
   },
   "packageManager": "pnpm@9.15.9"
 }

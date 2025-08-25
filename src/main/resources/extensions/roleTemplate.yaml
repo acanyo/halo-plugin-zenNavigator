@@ -1,0 +1,30 @@
+apiVersion: v1alpha1
+kind: Role
+metadata:
+  name: role-template-equipment-view
+  labels:
+    halo.run/role-template: "true"
+  annotations:
+    rbac.authorization.halo.run/module: "装备"
+    rbac.authorization.halo.run/ui-permissions: '["plugin:equipment:view"]'
+    rbac.authorization.halo.run/display-name: "装备查看"
+rules:
+  - apiGroups: [ "equipment.kunkunyu.com", "console.api.equipment.kunkunyu.com"]
+    resources: [ "equipments", "equipmentgroups" ]
+    verbs: [ "get", "list" ]
+---
+apiVersion: v1alpha1
+kind: Role
+metadata:
+  name: role-template-equipment-manage
+  labels:
+    halo.run/role-template: "true"
+  annotations:
+    rbac.authorization.halo.run/dependencies: '["role-template-equipment-view"]'
+    rbac.authorization.halo.run/ui-permissions: '["plugin:equipment:manage"]'
+    rbac.authorization.halo.run/module: "装备"
+    rbac.authorization.halo.run/display-name: "装备管理"
+rules:
+  - apiGroups: [ "equipment.kunkunyu.com", "console.api.equipment.kunkunyu.com"]
+    resources: [ "equipments", "equipmentgroups" ]
+    verbs: [ "create", "patch", "update", "delete", "deletecollection" ]
