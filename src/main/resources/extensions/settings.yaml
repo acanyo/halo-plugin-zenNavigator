@@ -28,14 +28,6 @@ spec:
           key: bgImages
           value: "https://img-baofun.zhhainiao.com/pcwallpaper_ugc/preview/9b09b3e56cc7abc842f2985bafdc4c74_preview.mp4"
           help: 为空默认白色背景，支持视频背景和图片
-        - $formkit: text
-          label: 阿里矢量图标
-          name: iconfont
-          id: iconfont
-          key: iconfont
-          validation: required
-          value: ""
-          help: "https://www.iconfont.cn/,请前往阿里矢量图标管理自己的图标"
         - $formkit: range
           name: transparency
           id: transparency
@@ -46,21 +38,6 @@ spec:
           step: 1
           max: 100
           help: $get(transparency).value
-        - $formkit: select
-          name: navCategories
-          label: 导航分类
-          multiple: true
-          clearable: true
-          searchable: true
-          action: /apis/core.halo.run/v1alpha1/linkgroups
-          requestOption:
-            method: GET
-            pageField: page
-            sizeField: size
-            totalField: total
-            itemsField: items
-            labelField: spec.displayName
-            valueField: metadata.name
         - $formkit: checkbox
           label: 开启灵动岛弹窗
           name: enableSmart
