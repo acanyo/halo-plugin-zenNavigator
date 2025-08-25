@@ -3,8 +3,6 @@ package cc.lik.zenNavigator;
 import static run.halo.app.extension.index.IndexAttributeFactory.simpleAttribute;
 
 import cc.lik.zenNavigator.entity.NavCategory;
-import cc.lik.zenNavigator.entity.NavSite;
-import cc.lik.zenNavigator.entity.NavSubcategory;
 import org.springframework.stereotype.Component;
 import run.halo.app.extension.Scheme;
 import run.halo.app.extension.SchemeManager;
@@ -38,35 +36,11 @@ public class ZenNavigatorPlugin extends BasePlugin {
                 .setIndexFunc(
                     simpleAttribute(NavCategory.class, syncFriendPost -> syncFriendPost.getSpec().getName())));
         });
-        schemeManager.register(NavSubcategory.class, indexSpecs -> {
-            indexSpecs.add(new IndexSpec()
-                .setName("spec.name")
-                .setIndexFunc(
-                    simpleAttribute(NavSubcategory.class, syncFriendPost -> syncFriendPost.getSpec().getName())));
-            indexSpecs.add(new IndexSpec()
-                .setName("spec.ownerName")
-                .setIndexFunc(
-                    simpleAttribute(NavSubcategory.class, friendPost -> friendPost.getSpec().getOwnerName())));
-        });
-        schemeManager.register(NavSite.class, indexSpecs -> {
-            indexSpecs.add(new IndexSpec()
-                .setName("spec.name")
-                .setIndexFunc(
-                    simpleAttribute(NavSubcategory.class, syncFriendPost -> syncFriendPost.getSpec().getName())));
-            indexSpecs.add(new IndexSpec()
-                .setName("spec.ownerName")
-                .setIndexFunc(
-                    simpleAttribute(NavSubcategory.class, friendPost -> friendPost.getSpec().getOwnerName())));
-        });
     }
 
     @Override
     public void stop() {
         Scheme categoryScheme = schemeManager.get(NavCategory.class);
-        Scheme subcategoryScheme = schemeManager.get(NavSubcategory.class);
-        Scheme siteScheme = schemeManager.get(NavSite.class);
         schemeManager.unregister(categoryScheme);
-        schemeManager.unregister(subcategoryScheme);
-        schemeManager.unregister(siteScheme);
     }
 }

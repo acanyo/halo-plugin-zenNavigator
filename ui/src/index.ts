@@ -1,4 +1,4 @@
-import { definePlugin } from "@halo-dev/console-shared";
+import { definePlugin } from '@halo-dev/console-shared'
 
 export default definePlugin({
   components: {},
@@ -6,4 +6,4 @@ export default definePlugin({
     
   ],
   extensionPoints: {},
-});
+})
