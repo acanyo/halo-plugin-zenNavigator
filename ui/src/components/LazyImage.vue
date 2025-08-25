@@ -38,13 +38,13 @@ onMounted(async () => {
 });
 </script>
 <template>
-    <div :class="classes">
-        <template v-if="isLoading">
-            <slot name="loading"> loading... </slot>
-        </template>
-        <template v-else-if="error">
-            <slot name="error"> error </slot>
-        </template>
-        <img v-else class=":uno: size-full object-cover" :src="src" :alt="alt" />
-    </div>
+  <div :class="classes">
+    <template v-if="isLoading">
+      <slot name="loading"> loading... </slot>
+    </template>
+    <template v-else-if="error">
+      <slot name="error"> error </slot>
+    </template>
+    <img v-else class=":uno: size-full object-cover" :src="src" :alt="alt" />
+  </div>
 </template>

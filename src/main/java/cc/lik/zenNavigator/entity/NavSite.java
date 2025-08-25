@@ -8,7 +8,7 @@ import run.halo.app.extension.GVK;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@GVK(group = "ZenNavigator.lik.cc", version = "v1alpha1", kind = "NavSite",
+@GVK(group = "zenNavigator.lik.cc", version = "v1alpha1", kind = "NavSite",
     plural = "navsite", singular = "navsite")
 public class NavSite extends AbstractExtension {
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED)

@@ -54,7 +54,7 @@ const {
         if (!selectedGroup.value) {
             return [] as NavSite[];
         }
-        const { data } = await axiosInstance.get<NavSiteList>("/apis/console.api.zenNavigator.lik.cc/v1alpha1/navsites", {
+        const { data } = await axiosInstance.get<NavSiteList>("/apis/zenNavigator.lik.cc/v1alpha1/navsite", {
             params: {
                 page: page.value,
                 size: size.value,
@@ -126,7 +126,7 @@ const handleDeleteInBatch = () => {
         onConfirm: async () => {
             try {
                 const promises = Array.from(selectedSites.value).map((site) => {
-                    return axiosInstance.delete(`/apis/console.api.zenNavigator.lik.cc/v1alpha1/navsites/${site.metadata.name}`);
+                    return axiosInstance.delete(`/apis/zenNavigator.lik.cc/v1alpha1/navsite/${site.metadata.name}`);
                 });
                 await Promise.all(promises);
             } catch (e) {
@@ -265,7 +265,7 @@ const onAttachmentsSelect = async (attachments: AttachmentLike[]) => {
     }
 
     const createRequests = newSites.map((site) => {
-        return axiosInstance.post<NavSite>("/apis/console.api.zenNavigator.lik.cc/v1alpha1/navsites", {
+        return axiosInstance.post<NavSite>("/apis/zenNavigator.lik.cc/v1alpha1/navsite", {
             metadata: {
                 name: "",
                 generateName: "navsite-",
@@ -286,7 +286,7 @@ const handleSaveInBatch = async () => {
     try {
         const promises = sites.value?.map((site: NavSite, index: number) => {
             (site as any).spec.priority = index;
-            return axiosInstance.put(`/apis/console.api.zenNavigator.lik.cc/v1alpha1/navsites/${site.metadata.name}`, site);
+            return axiosInstance.put(`/apis/zenNavigator.lik.cc/v1alpha1/navsite/${site.metadata.name}`, site);
         });
         if (promises) {
             await Promise.all(promises);

@@ -24,9 +24,11 @@ public class NavGroupEndpoint implements CustomEndpoint {
 
     @Override
     public RouterFunction<ServerResponse> endpoint() {
+        final var tag = "api.zenNavigator.lik.cc/v1alpha1/Nav";
         return route()
             .GET("navgroups", this::listNavGroups,
                 builder -> builder.operationId("ListNavGroups")
+                    .tag(tag)
                     .description("List navigation groups.")
                     .response(responseBuilder().implementation(
                         ListResult.generateGenericClass(NavGroup.class)))
@@ -36,7 +38,7 @@ public class NavGroupEndpoint implements CustomEndpoint {
 
     @Override
     public GroupVersion groupVersion() {
-        return GroupVersion.parseAPIVersion("console.api.zenNavigator.lik.cc/v1alpha1");
+        return GroupVersion.parseAPIVersion("api.zenNavigator.lik.cc/v1alpha1");
     }
 
     private Mono<ServerResponse> listNavGroups(ServerRequest serverRequest) {

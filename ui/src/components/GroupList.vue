@@ -34,7 +34,7 @@ const groups = ref<NavGroup[]>([]);
 const { refetch, isLoading } = useQuery<NavGroup[]>({
     queryKey: ["plugin:zen-navigator:groups"],
     queryFn: async () => {
-        const { data } = await axiosInstance.get<NavGroupList>("/apis/console.api.zenNavigator.lik.cc/v1alpha1/navgroups");
+        const { data } = await axiosInstance.get<NavGroupList>("/apis/zenNavigator.lik.cc/v1alpha1/navgroup");
         return data.items
                 .map((group) => {
                     if (group.spec) {
@@ -76,7 +76,7 @@ const handleSaveInBatch = async () => {
             if (group.spec) {
                 group.spec.priority = index;
             }
-            return axiosInstance.put(`/apis/console.api.zenNavigator.lik.cc/v1alpha1/navgroups/${group.metadata.name}`, group);
+            return axiosInstance.put(`/apis/zenNavigator.lik.cc/v1alpha1/navgroup/${group.metadata.name}`, group);
         });
         if (promises) {
             await Promise.all(promises);

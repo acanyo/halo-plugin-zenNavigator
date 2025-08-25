@@ -70,11 +70,11 @@ const handleSaveGroup = async () => {
         isSubmitting.value = true;
         if (isUpdateMode.value) {
             await axiosInstance.put<NavGroup>(
-                    `/apis/console.api.zenNavigator.lik.cc/v1alpha1/navgroups/${formState.value.metadata.name}`,
+                    `/apis/zenNavigator.lik.cc/v1alpha1/navgroup/${formState.value.metadata.name}`,
                     formState.value
             );
         } else {
-            const { data } = await axiosInstance.post<NavGroup>(`/apis/console.api.zenNavigator.lik.cc/v1alpha1/navgroups`, formState.value);
+            const { data } = await axiosInstance.post<NavGroup>(`/apis/zenNavigator.lik.cc/v1alpha1/navgroup`, formState.value);
             emit("saved", data);
         }
         modal.value?.close();

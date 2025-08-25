@@ -67,14 +67,14 @@ const handleCreateOrUpdateSite = async () => {
         isSubmitting.value = true;
         if (isUpdateMode.value) {
             await axiosInstance.put(
-                    `/apis/console.api.zenNavigator.lik.cc/v1alpha1/navsites/${formState.value.metadata.name}`,
+                    `/apis/zenNavigator.lik.cc/v1alpha1/navsite/${formState.value.metadata.name}`,
                     formState.value
             );
         } else {
             if (props.group) {
                 formState.value.spec.groupName = props.group;
             }
-            const { data } = await axiosInstance.post(`/apis/console.api.zenNavigator.lik.cc/v1alpha1/navsites`, formState.value);
+            const { data } = await axiosInstance.post(`/apis/zenNavigator.lik.cc/v1alpha1/navsite`, formState.value);
             emit("saved", data as NavSite);
         }
         modal.value?.close();
@@ -161,3 +161,4 @@ watch(Meta_Enter, (v) => {
         </template>
     </VModal>
 </template>
+ 

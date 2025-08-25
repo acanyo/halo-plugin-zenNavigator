@@ -8,7 +8,7 @@ import run.halo.app.extension.GVK;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@GVK(group = "ZenNavigator.lik.cc", version = "v1alpha1", kind = "NavGroup",
+@GVK(group = "zenNavigator.lik.cc", version = "v1alpha1", kind = "NavGroup",
     plural = "navgroup", singular = "navgroup")
 public class NavGroup extends AbstractExtension {
     @Schema(requiredMode = Schema.RequiredMode.REQUIRED)

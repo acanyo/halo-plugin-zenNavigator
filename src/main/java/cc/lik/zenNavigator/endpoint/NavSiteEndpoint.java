@@ -24,7 +24,7 @@ public class NavSiteEndpoint implements CustomEndpoint {
 
     @Override
     public RouterFunction<ServerResponse> endpoint() {
-        final var tag = "api.zenNavigator.lik.cc/v1alpha1/NavSite";
+        final var tag = "api.zenNavigator.lik.cc/v1alpha1/Nav";
         return route()
             .GET("navsites", this::listNavSites,
                 builder -> {
