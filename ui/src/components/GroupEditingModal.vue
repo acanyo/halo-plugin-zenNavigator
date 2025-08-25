@@ -32,7 +32,7 @@ const initialFormState: NavGroup = {
         priority: 0,
     },
     kind: "NavGroup",
-    apiVersion: "ZenNavigator.lik.cc/v1alpha1",
+    apiVersion: "zenNavigator.lik.cc/v1alpha1",
 } as NavGroup;
 
 const formState = ref<NavGroup>(cloneDeep(initialFormState));
@@ -108,7 +108,7 @@ const handleSaveGroup = async () => {
                 </div>
                 <div class=":uno: mt-5 md:col-span-3 md:mt-0 divide-y divide-gray-100">
                     <FormKit name="name" label="分组名称" type="text" validation="required"></FormKit>
-                    <FormKit name="icon" label="图标" type="text"></FormKit>
+                    <FormKit name="icon" label="图标" type="attachment" :accepts="['image/*']"></FormKit>
                     <FormKit name="inTopMenu" label="顶部菜单显示" type="checkbox"></FormKit>
                     <FormKit name="priority" label="优先级" type="number"></FormKit>
                 </div>
@@ -129,7 +129,7 @@ const handleSaveGroup = async () => {
                         ref="annotationsFormRef"
                         :value="formState.metadata.annotations"
                         kind="NavGroup"
-                        group="ZenNavigator.lik.cc"
+                        group="enNavigator.lik.cc"
                 />
             </div>
         </div>

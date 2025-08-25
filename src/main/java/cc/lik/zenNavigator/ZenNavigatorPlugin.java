@@ -41,25 +41,26 @@ public class ZenNavigatorPlugin extends BasePlugin {
             indexSpecs.add(new IndexSpec()
                 .setName("spec.url")
                 .setIndexFunc(
-                    simpleAttribute(NavSite.class, site -> site.getSpec().getName())));
+                    simpleAttribute(NavSite.class, site -> site.getSpec().getUrl())));
         });
         schemeManager.register(NavSite.class, indexSpecs -> {
             indexSpecs.add(new IndexSpec()
                 .setName("spec.icon")
                 .setIndexFunc(
-                    simpleAttribute(NavSite.class, site -> site.getSpec().getName())));
+                    simpleAttribute(NavSite.class, site -> site.getSpec().getIcon())));
         });
         schemeManager.register(NavSite.class, indexSpecs -> {
             indexSpecs.add(new IndexSpec()
                 .setName("spec.description")
                 .setIndexFunc(
-                    simpleAttribute(NavSite.class, site -> site.getSpec().getName())));
+                    simpleAttribute(NavSite.class, site -> site.getSpec().getDescription())));
         });
         schemeManager.register(NavGroup.class, indexSpecs -> {
             indexSpecs.add(new IndexSpec()
                 .setName("spec.priority")
                 .setIndexFunc(
-                    simpleAttribute(NavGroup.class, group -> group.getSpec().getName())));
+                    simpleAttribute(NavGroup.class, group -> String.valueOf(
+                        group.getSpec().getPriority()))));
         });
         schemeManager.register(NavGroup.class, indexSpecs -> {
             indexSpecs.add(new IndexSpec()

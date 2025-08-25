@@ -272,7 +272,7 @@ const onAttachmentsSelect = async (attachments: AttachmentLike[]) => {
             },
             spec: site,
             kind: "NavSite",
-            apiVersion: "ZenNavigator.lik.cc/v1alpha1",
+            apiVersion: "zenNavigator.lik.cc/v1alpha1",
         });
     });
 

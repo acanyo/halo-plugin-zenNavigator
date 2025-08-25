@@ -36,7 +36,7 @@ const initialFormState: NavSite = {
         description: "",
     },
     kind: "NavSite",
-    apiVersion: "ZenNavigator.lik.cc/v1alpha1",
+    apiVersion: "zenNavigator.lik.cc/v1alpha1",
 } as NavSite;
 
 const formState = ref<NavSite>(cloneDeep(initialFormState));
@@ -128,7 +128,7 @@ watch(Meta_Enter, (v) => {
                 </div>
                 <div class=":uno: mt-5 md:col-span-3 md:mt-0 divide-y divide-gray-100">
                     <FormKit name="name" label="名称" type="text" validation="required"></FormKit>
-                    <FormKit name="icon" label="图标" type="text"></FormKit>
+                    <FormKit name="icon" label="图标" type="attachment" :accepts="['image/*']"></FormKit>
                     <FormKit name="url" label="网址" type="text"></FormKit>
                     <FormKit name="description" label="描述" type="textarea"></FormKit>
                 </div>
@@ -149,7 +149,7 @@ watch(Meta_Enter, (v) => {
                         ref="annotationsGroupFormRef"
                         :value="formState.metadata.annotations"
                         kind="NavSite"
-                        group="ZenNavigator.lik.cc"
+                        group="zenNavigator.lik.cc"
                 />
             </div>
         </div>
