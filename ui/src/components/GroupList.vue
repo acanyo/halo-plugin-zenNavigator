@@ -46,8 +46,9 @@ const { refetch, isLoading } = useQuery<NavGroup[]>({
                     return (a.spec?.priority || 0) - (b.spec?.priority || 0);
                 });
     },
-    refetchInterval() {
-        return false;
+    refetchInterval(data) {
+        const hasDeletingGroup = data?.some((group) => !!group.metadata.deletionTimestamp);
+        return hasDeletingGroup ? 1000 : false;
     },
     onSuccess(data) {
         groups.value = data;
@@ -95,11 +96,11 @@ const handleDelete = async (group: NavGroup) => {
         confirmType: "danger",
         onConfirm: async () => {
             try {
-                // 后端未提供删除接口时占位
-                await Promise.resolve();
-                refetch();
+                await axiosInstance.delete(`/apis/zenNavigator.lik.cc/v1alpha1/navgroup/${group.metadata.name}`);
             } catch (e) {
-                console.error("Failed to delete group", e);
+                console.error(e);
+            } finally {
+                refetch();
             }
         },
     });
