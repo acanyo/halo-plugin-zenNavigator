@@ -126,10 +126,10 @@ function onGroupEditingModalClose() {
 </script>
 <template>
     <GroupEditingModal v-if="groupEditingModal" :group="updateGroup" @close="onGroupEditingModalClose" />
-    <VCard :body-class="[':uno: !p-0']" title="分组">
+    <VCard :body-class="[':uno: !p-0']" title="类型">
         <VLoading v-if="isLoading" />
         <Transition v-else-if="!groups || !groups.length" appear name="fade">
-            <VEmpty message="你可以尝试刷新或者新建分组" title="当前没有分组">
+            <VEmpty message="你可以尝试刷新或者新建类型分组" title="当前没有类型分组">
                 <template #actions>
                     <VSpace>
                         <VButton size="sm" @click="refetch()"> 刷新</VButton>
@@ -198,9 +198,8 @@ function onGroupEditingModalClose() {
                         type="secondary"
                         @click="handleOpenEditingModal(undefined)"
                 >
-                    新增分组
+                    新增类型
                 </VButton>
-                <!-- @unocss-skip-end -->
             </Transition>
         </template>
     </VCard>

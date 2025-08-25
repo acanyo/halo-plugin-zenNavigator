@@ -24,7 +24,7 @@ import type { AttachmentLike } from "@halo-dev/console-shared";
 import { useQuery } from "@tanstack/vue-query";
 import Fuse from "fuse.js";
 import { computed, nextTick, ref, watch } from "vue";
-import TablerDeviceGamepad3 from '~icons/tabler/device-gamepad-3'
+import TablerDeviceGamepad3 from '~icons/streamline-freehand-color/website-development-browser-hand'
 import GroupList from "../components/GroupList.vue";
 import {VueDraggable} from "vue-draggable-plus";
 
@@ -332,7 +332,7 @@ const onEditingModalClose = () => {
         </template>
     </NavSiteEditingModal>
     <AttachmentSelectorModal v-model:visible="attachmentModal" :accepts="['image/*']" @select="onAttachmentsSelect" />
-    <VPageHeader title="站点">
+    <VPageHeader title="禅导航">
         <template #icon>
             <TablerDeviceGamepad3 />
         </template>
@@ -370,7 +370,7 @@ const onEditingModalClose = () => {
                     </template>
                     <VLoading v-if="isLoading" />
                     <Transition v-else-if="!selectedGroup" appear name="fade">
-                        <VEmpty message="请选择或新建分组" title="未选择分组"></VEmpty>
+                        <VEmpty message="请选择或新建分组类型" title="未选择分组类型"></VEmpty>
                     </Transition>
                     <Transition v-else-if="!searchResults.length" appear name="fade">
                         <VEmpty message="你可以尝试刷新或者新建站点" title="当前没有站点">
