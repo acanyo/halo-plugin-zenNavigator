@@ -72,7 +72,7 @@ public class ZenNavigatorPlugin extends BasePlugin {
     @Override
     public void stop() {
         Scheme siteScheme = schemeManager.get(NavSite.class);
-        Scheme groupScheme = schemeManager.get(NavSite.class);
+        Scheme groupScheme = schemeManager.get(NavGroup.class);
         schemeManager.unregister(siteScheme);
         schemeManager.unregister(groupScheme);
     }
