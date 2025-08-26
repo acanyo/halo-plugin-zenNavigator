@@ -339,6 +339,11 @@ const onEditingModalClose = () => {
         <template #icon>
             <TablerDeviceGamepad3 />
         </template>
+        <template #actions>
+            <a href="/nav" target="_blank" rel="noopener noreferrer">
+                <VButton size="sm">跳转前台</VButton>
+            </a>
+        </template>
     </VPageHeader>
     <div class=":uno: p-4">
         <div class=":uno: flex flex-col gap-2 lg:flex-row">
