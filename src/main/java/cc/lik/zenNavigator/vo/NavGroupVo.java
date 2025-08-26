@@ -15,12 +15,12 @@ public class NavGroupVo implements ExtensionVoOperator {
 
     NavGroup.NavGroupSpec spec;
 
-    List<NavSiteVo> nav;
+    List<NavSiteVo> sites;
     
-    public static NavGroupVoBuilder from(NavGroupVo navGroup) {
+    public static NavGroupVoBuilder from(NavGroup navGroup) {
         return NavGroupVo.builder()
             .metadata(navGroup.getMetadata())
             .spec(navGroup.getSpec())
-            .nav(List.of());
+            .sites(List.of());
     }
 }

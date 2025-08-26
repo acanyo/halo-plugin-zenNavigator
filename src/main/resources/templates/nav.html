@@ -16,14 +16,7 @@
     <link rel="stylesheet" th:href="'/plugins/ZenNavigator/assets/static/css/nav-styles.css?version=' + ${pluginVersion}">
     <link rel="stylesheet" th:href="'/plugins/ZenNavigator/assets/static/css/nav.css?version=' + ${pluginVersion}">
     <!-- Remix Icon -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-    <!-- 阿里图标库 - 根据navigation.Iconfont动态引入 -->
-    <link th:if="${navigation.Iconfont != null and navigation.Iconfont.startsWith('//at.alicdn.com')}" 
-          th:href="${navigation.Iconfont}" 
-          rel="stylesheet">
-    <script th:if="${navigation.Iconfont != null and navigation.Iconfont.startsWith('//at.alicdn.com')}" 
-            th:src="${navigation.Iconfont}" 
-            th:unless="${navigation.Iconfont.endsWith('.css')}"></script>
+    <link rel="stylesheet" th:href="'/plugins/ZenNavigator/assets/static/css/remixicon.css?version=' + ${pluginVersion}">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="导航站">
@@ -81,11 +74,11 @@
                         首页
                     </a>
                     <!-- 顶部菜单 -->
-                    <a th:each="category : ${navigation.categories}" 
-                       th:if="${category.inTopMenu}" 
-                       th:href="'#' + ${category.id}" 
+                    <a th:each="category : ${groups}" 
+                       th:if="${category.spec.inTopMenu}" 
+                       th:href="'#' + ${category.metadata.name}" 
                        class="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-primary-50 dark:hover:bg-primary-900/30 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-200 font-medium relative after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-primary-500 after:transition-all after:duration-300 hover:after:w-1/2"
-                       th:text="${category.name}">分类</a>
+                       th:text="${category.spec.name}">分类</a>
                 </nav>
             </div>
         </div>
@@ -112,13 +105,41 @@
 <!-- 主要内容区 -->
     <main class="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
         
+        
         <!-- 分类内容 -->
         <div class="space-y-8" id="nav-categories">
+            <!-- 空数据提示 -->
+            <div th:if="${groups == null or groups.isEmpty()}" class="text-center py-16">
+                <div class="max-w-md mx-auto">
+                    <i class="ri-folder-open-line text-6xl text-gray-300 dark:text-gray-600 mb-4"></i>
+                    <h3 class="text-lg font-medium text-gray-700 dark:text-gray-300 mb-2">暂无导航数据</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">请先在管理后台添加导航分类和站点</p>
+                </div>
+            </div>
+            
             <!-- 导航分类 -->
-            <div th:each="category : ${navigation.categories}" th:id="${category.id}" class="bg-white/80 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-gray-100/50 dark:border-gray-700/50 transition-all duration-300 hover:shadow-md hover:border-primary-200/50 dark:hover:border-primary-700/30 animate-fade-in">
+            <div th:each="category : ${groups}" th:id="${category.metadata.name}" class="bg-white/80 dark:bg-gray-800/60 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-gray-100/50 dark:border-gray-700/50 transition-all duration-300 hover:shadow-md hover:border-primary-200/50 dark:hover:border-primary-700/30 animate-fade-in">
                 <div class="flex items-center gap-3 mb-5 pb-2 border-b border-gray-100 dark:border-gray-800">
-                    <i th:class="${category.icon + ' text-2xl text-primary-500'}"></i>
-                    <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100" th:text="${category.name}">分类名称</h2>
+                    <div class="w-8 h-8 flex items-center justify-center">
+                        <!-- 如果是Remix Icon -->
+                        <i th:if="${category.spec.icon != null and category.spec.icon.startsWith('ri-')}" 
+                           th:class="${category.spec.icon + ' text-2xl text-primary-500'}"></i>
+                        <!-- 如果是图片URL -->
+                        <img th:if="${category.spec.icon != null and !category.spec.icon.startsWith('ri-')}" 
+                             th:src="${category.spec.icon}" 
+                             class="w-8 h-8 object-cover" 
+                             th:alt="${category.spec.name + ' 图标'}" 
+                             loading="lazy" 
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <!-- 默认图标（当图片加载失败时显示） -->
+                        <i th:if="${category.spec.icon != null and !category.spec.icon.startsWith('ri-')}" 
+                           class="ri-folder-line text-2xl text-primary-500" 
+                           style="display: none;"></i>
+                        <!-- 没有图标时的默认显示 -->
+                        <i th:if="${category.spec.icon == null or category.spec.icon == ''}" 
+                           class="ri-folder-line text-2xl text-primary-500"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100" th:text="${category.spec.name}">分类名称</h2>
                     <button class="category-toggle ml-auto text-gray-400 hover:text-primary-500 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rotate-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -128,36 +149,51 @@
                 
                 <!-- 分类内容 -->
                 <div class="category-content opacity-100 transition-opacity duration-300">
-                    <!-- 子分类 -->
-                    <div th:each="subcategory : ${category.subcategories}" class="mt-6 mb-8 last:mb-0">
-                        <div class="flex items-center gap-3 mb-4 pb-2 border-b border-gray-100/50 dark:border-gray-700/50">
-                            <i th:class="${subcategory.icon + ' text-xl text-primary-500'}"></i>
-                            <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-200" th:text="${subcategory.name}">子分类名称</h3>
+                    <!-- 站点列表 -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5 mt-6">
+                        <!-- 空站点提示 -->
+                        <div th:if="${category.sites == null or category.sites.isEmpty()}" class="col-span-full text-center py-8">
+                            <i class="ri-link text-3xl text-gray-300 dark:text-gray-600 mb-2"></i>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">该分类下暂无站点</p>
                         </div>
                         
-                        <!-- 站点列表 -->
-                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
-                            <a th:each="site : ${subcategory.sites}" 
-                               th:href="${site.url}" 
-                               th:data-url="${site.url}"
-                               class="nav-site flex flex-col items-center p-4 rounded-lg bg-white/90 dark:bg-gray-800/90 border border-gray-100 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-600 hover:shadow-md transition-all duration-200 hover:-translate-y-1 hover:bg-white dark:hover:bg-gray-800 cursor-pointer group"
-                               target="_blank"
-                               rel="noopener noreferrer"
-                               tabindex="0">
-                                <div class="mb-3 rounded-lg overflow-hidden shadow-sm transition-all duration-300 group-hover:shadow-md w-12 h-12 flex items-center justify-center bg-gray-100 dark:bg-gray-700">
-                                    <img th:src="${site.icon}" class="w-12 h-12 object-cover transition-transform duration-300 group-hover:scale-110" th:alt="${site.name + ' 图标'}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23cccccc\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'%3E%3Crect x=\'3\' y=\'3\' width=\'18\' height=\'18\' rx=\'2\' ry=\'2\'%3E%3C/rect%3E%3Ccircle cx=\'8.5\' cy=\'8.5\' r=\'1.5\'%3E%3C/circle%3E%3Cpolyline points=\'21 15 16 10 5 21\'%3E%3C/polyline%3E%3C/svg%3E';">
-                                </div>
-                                <div class="text-center w-full">
-                                    <div class="font-medium text-gray-800 dark:text-gray-200 transition-colors duration-200 group-hover:text-primary-600 dark:group-hover:text-primary-400 text-sm md:text-base" th:text="${site.name}">站点名称</div>
-                                    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-2 transition-colors duration-200" th:text="${site.description}">站点描述</div>
-                                </div>
-                            </a>
-                        </div>
+                        <a th:each="site : ${category.sites}" 
+                           th:href="${site.spec.url}" 
+                           th:data-url="${site.spec.url}"
+                           class="nav-site flex flex-col items-center p-4 rounded-lg bg-white/90 dark:bg-gray-800/90 border border-gray-100 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-600 hover:shadow-md transition-all duration-200 hover:-translate-y-1 hover:bg-white dark:hover:bg-gray-800 cursor-pointer group"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           tabindex="0">
+                            <div class="mb-3 rounded-lg overflow-hidden shadow-sm transition-all duration-300 group-hover:shadow-md w-12 h-12 flex items-center justify-center bg-gray-100 dark:bg-gray-700">
+                                <!-- 如果是Remix Icon -->
+                                <i th:if="${site.spec.icon != null and site.spec.icon.startsWith('ri-')}" 
+                                   th:class="${site.spec.icon + ' text-2xl text-primary-500 transition-transform duration-300 group-hover:scale-110'}"></i>
+                                <!-- 如果是图片URL -->
+                                <img th:if="${site.spec.icon != null and !site.spec.icon.startsWith('ri-')}" 
+                                     th:src="${site.spec.icon}" 
+                                     class="w-12 h-12 object-cover transition-transform duration-300 group-hover:scale-110" 
+                                     th:alt="${site.spec.name + ' 图标'}" 
+                                     loading="lazy" 
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <!-- 默认图标（当图片加载失败时显示） -->
+                                <i th:if="${site.spec.icon != null and !site.spec.icon.startsWith('ri-')}" 
+                                   class="ri-link text-2xl text-primary-500 transition-transform duration-300 group-hover:scale-110" 
+                                   style="display: none;"></i>
+                                <!-- 没有图标时的默认显示 -->
+                                <i th:if="${site.spec.icon == null or site.spec.icon == ''}" 
+                                   class="ri-link text-2xl text-primary-500 transition-transform duration-300 group-hover:scale-110"></i>
+                            </div>
+                            <div class="text-center w-full">
+                                <div class="font-medium text-gray-800 dark:text-gray-200 transition-colors duration-200 group-hover:text-primary-600 dark:group-hover:text-primary-400 text-sm md:text-base" th:text="${site.spec.name}">站点名称</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-2 transition-colors duration-200" th:text="${site.spec.description}">站点描述</div>
+                                <div class="text-xs text-gray-400 dark:text-gray-500 mt-1 truncate" th:text="${site.spec.url}">网址</div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
-    </div>
-</main>
+        </div>
+    </main>
 
 <!-- 悬浮按钮组 -->
 <div class="fixed right-4 md:right-8 bottom-4 md:bottom-8 flex flex-col gap-4 z-50">
@@ -199,7 +235,7 @@
                 <span>Copyright © <span th:text="${currentYear}">2025</span></span>
                 <a href="#" class="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 transition-colors" th:text="${navigation.siteName}">导航站</a>
                 <span class="hidden sm:inline">|</span>
-                <span class="hidden sm:inline">By <a href="https://lik.cc" target="_blank" class="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 transition-colors">Handsome</a></span>
+                <span class="hidden sm:inline">By <a href="https://www.lik.cc" target="_blank" class="text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300 transition-colors">Handsome</a></span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-500 animate-pulse-slow" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                 </svg>
@@ -223,12 +259,12 @@
                 </a>
                 
                 <!-- 分类导航 -->
-                <a th:each="category : ${navigation.categories}" 
-                   th:if="${category.inTopMenu}"
-                   th:href="'#' + ${category.id}"
+                <a th:each="category : ${groups}" 
+                   th:if="${category.spec.inTopMenu}"
+                   th:href="'#' + ${category.metadata.name}"
                    class="mobile-menu-item">
-                    <i th:class="${category.icon + ' mr-3'}"></i>
-                    <span th:text="${category.name}">分类名称</span>
+                    <i th:class="${category.spec.icon + ' mr-3'}"></i>
+                    <span th:text="${category.spec.name}">分类名称</span>
                 </a>
             </nav>
         </div>

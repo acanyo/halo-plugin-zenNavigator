@@ -31,43 +31,35 @@ public class ZenNavigatorPlugin extends BasePlugin {
 
     @Override
     public void start() {
-        schemeManager.register(NavSite.class, indexSpecs -> {
-            indexSpecs.add(new IndexSpec()
-                .setName("spec.name")
-                .setIndexFunc(
-                    simpleAttribute(NavSite.class, site -> site.getSpec().getName())));
-        });
-        schemeManager.register(NavSite.class, indexSpecs -> {
-            indexSpecs.add(new IndexSpec()
-                .setName("spec.url")
-                .setIndexFunc(
-                    simpleAttribute(NavSite.class, site -> site.getSpec().getUrl())));
-        });
-        schemeManager.register(NavSite.class, indexSpecs -> {
-            indexSpecs.add(new IndexSpec()
-                .setName("spec.icon")
-                .setIndexFunc(
-                    simpleAttribute(NavSite.class, site -> site.getSpec().getIcon())));
-        });
-        schemeManager.register(NavSite.class, indexSpecs -> {
-            indexSpecs.add(new IndexSpec()
-                .setName("spec.description")
-                .setIndexFunc(
-                    simpleAttribute(NavSite.class, site -> site.getSpec().getDescription())));
-        });
-        schemeManager.register(NavGroup.class, indexSpecs -> {
-            indexSpecs.add(new IndexSpec()
-                .setName("spec.priority")
-                .setIndexFunc(
-                    simpleAttribute(NavGroup.class, group -> String.valueOf(
-                        group.getSpec().getPriority()))));
-        });
-        schemeManager.register(NavGroup.class, indexSpecs -> {
-            indexSpecs.add(new IndexSpec()
-                .setName("spec.name")
-                .setIndexFunc(
-                    simpleAttribute(NavGroup.class, group -> group.getSpec().getName())));
-        });
+        schemeManager.register(NavSite.class, indexSpecs -> indexSpecs.add(new IndexSpec()
+            .setName("spec.groupName")
+            .setIndexFunc(
+                simpleAttribute(NavSite.class, site -> site.getSpec().getGroupName()))));
+        schemeManager.register(NavSite.class, indexSpecs -> indexSpecs.add(new IndexSpec()
+            .setName("spec.name")
+            .setIndexFunc(
+                simpleAttribute(NavSite.class, site -> site.getSpec().getName()))));
+        schemeManager.register(NavSite.class, indexSpecs -> indexSpecs.add(new IndexSpec()
+            .setName("spec.url")
+            .setIndexFunc(
+                simpleAttribute(NavSite.class, site -> site.getSpec().getUrl()))));
+        schemeManager.register(NavSite.class, indexSpecs -> indexSpecs.add(new IndexSpec()
+            .setName("spec.icon")
+            .setIndexFunc(
+                simpleAttribute(NavSite.class, site -> site.getSpec().getIcon()))));
+        schemeManager.register(NavSite.class, indexSpecs -> indexSpecs.add(new IndexSpec()
+            .setName("spec.description")
+            .setIndexFunc(
+                simpleAttribute(NavSite.class, site -> site.getSpec().getDescription()))));
+        schemeManager.register(NavGroup.class, indexSpecs -> indexSpecs.add(new IndexSpec()
+            .setName("spec.priority")
+            .setIndexFunc(
+                simpleAttribute(NavGroup.class, group -> String.valueOf(
+                    group.getSpec().getPriority())))));
+        schemeManager.register(NavGroup.class, indexSpecs -> indexSpecs.add(new IndexSpec()
+            .setName("spec.name")
+            .setIndexFunc(
+                simpleAttribute(NavGroup.class, group -> group.getSpec().getName()))));
     }
 
     @Override

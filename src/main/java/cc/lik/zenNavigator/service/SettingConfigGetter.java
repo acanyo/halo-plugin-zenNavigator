@@ -12,9 +12,9 @@ public interface SettingConfigGetter {
 
         private String navTitle;
         private String navLogo;
-        private String bgImages; // 支持字符串或数组，按前端脚本兼容
-        private Integer transparency; // 0-100
+        private String bgImages;
+        private Integer transparency;
         private Boolean enableSmart;
-        private String content; // HTML 片段
+        private String content;
     }
 }

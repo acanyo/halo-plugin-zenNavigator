@@ -1,9 +1,9 @@
 package cc.lik.zenNavigator.util;
 
+import cc.lik.zenNavigator.dto.LinkDetailDTO;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
-import cc.lik.zenNavigator.dto.LinkDetailDTO;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
