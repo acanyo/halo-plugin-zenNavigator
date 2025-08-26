@@ -11,7 +11,10 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="msapplication-TileColor" content="#3b8ef5">
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="'/plugins/ZenNavigator/assets/static/css/tailwind.css?version=' + ${pluginVersion}">
+    <!-- 导航样式 -->
+    <link rel="stylesheet" th:href="'/plugins/ZenNavigator/assets/static/css/nav-styles.css?version=' + ${pluginVersion}">
+    <link rel="stylesheet" th:href="'/plugins/ZenNavigator/assets/static/css/nav.css?version=' + ${pluginVersion}">
     <!-- Remix Icon -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <!-- 阿里图标库 - 根据navigation.Iconfont动态引入 -->
@@ -21,7 +24,6 @@
     <script th:if="${navigation.Iconfont != null and navigation.Iconfont.startsWith('//at.alicdn.com')}" 
             th:src="${navigation.Iconfont}" 
             th:unless="${navigation.Iconfont.endsWith('.css')}"></script>
-    <!-- 注意：其他CSS和JavaScript文件通过NavHeadProcessor自动添加 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="导航站">
@@ -243,5 +245,8 @@
             siteName: /*[[${navigation.siteName}]]*/ '导航站'
         };
     </script>
+    
+    <!-- JavaScript文件 -->
+    <script defer th:src="'/plugins/ZenNavigator/assets/static/js/nav-scripts.js?version=' + ${pluginVersion}"></script>
 </body>
 </html>

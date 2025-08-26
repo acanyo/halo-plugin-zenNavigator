@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 基础样式 */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply text-gray-700 dark:text-gray-200 transition-colors duration-300;
+  }
+  
+  body.dark {
+    @apply bg-gray-900 text-gray-200;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-gray-800 dark:text-gray-100 transition-colors duration-300;
+  }
+  
+  a {
+    @apply transition-colors duration-200;
+  }
+  
+  /* 自定义滚动条 */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: rgba(243, 244, 246, 0.8);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(209, 213, 219, 0.8);
+    border-radius: 9999px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(156, 163, 175, 0.8);
+  }
+  
+  .dark ::-webkit-scrollbar-track {
+    background-color: rgba(31, 41, 55, 0.8);
+  }
+  
+  .dark ::-webkit-scrollbar-thumb {
+    background-color: rgba(75, 85, 99, 0.8);
+  }
+  
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(107, 114, 128, 0.8);
+  }
+}
+
+/* 自定义组件样式 */
+@layer components {
+  /* 背景和基础样式 */
+  .bg-gradient-custom {
+    @apply bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800;
+  }
+  
+  /* 顶部导航栏 */
+  .nav-header {
+    @apply fixed top-0 left-0 right-0 z-50 backdrop-blur-lg bg-white/80 dark:bg-gray-900/80 
+           border-b border-gray-200/50 dark:border-gray-700/50 shadow-sm transition-all duration-300;
+  }
+  
+  /* 导航Logo */
+  .nav-logo {
+    @apply flex items-center gap-2 group text-xl font-bold text-primary-600 dark:text-primary-400 
+           hover:text-primary-700 dark:hover:text-primary-300 transition-colors;
+  }
+  
+  /* Logo图标容器 */
+  .logo-icon-container {
+    @apply flex items-center justify-center w-9 h-9 rounded-full bg-primary-50 dark:bg-primary-900/30 
+           text-primary-500 dark:text-primary-400 transition-all duration-300 
+           group-hover:bg-primary-100 dark:group-hover:bg-primary-800/40 overflow-hidden;
+  }
+  
+  /* 站点卡片 */
+  .nav-site {
+    @apply flex flex-col items-center p-4 rounded-lg bg-white/90 dark:bg-gray-800/90 
+           border border-gray-100 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-600 
+           hover:shadow-md transition-all duration-200 hover:-translate-y-1 hover:bg-white dark:hover:bg-gray-800;
+  }
+  
+  /* 移动端菜单项 */
+  .mobile-menu-item {
+    @apply flex items-center px-4 py-3 text-gray-700 dark:text-gray-200 
+           hover:bg-primary-50 dark:hover:bg-primary-900/30 hover:text-primary-600 
+           dark:hover:text-primary-400 transition-all duration-200 rounded-lg;
+  }
+}
