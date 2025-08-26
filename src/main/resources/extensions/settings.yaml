@@ -19,7 +19,7 @@ spec:
               align-items: "center"
           children:
             - $el: span
-              children: "查看 智阅GPT 帮助文档"
+              children: "查看 禅导航 帮助文档"
             - $el: img
               attrs:
                 src: "/plugins/ZenNavigator/assets/static/img/link.svg"
