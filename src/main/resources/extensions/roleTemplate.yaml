@@ -16,7 +16,7 @@ rules:
 apiVersion: v1alpha1
 kind: Role
 metadata:
-  name: role-template-equipment-manage
+  name: role-template-zen-navigator-manage
   labels:
     halo.run/role-template: "true"
   annotations:

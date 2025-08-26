@@ -20,7 +20,7 @@ export interface NavGroupSpec {
 }
 
 export interface NavGroupStatus {
-  equipmentCount: number;
+  siteCount: number;
 }
 
 export interface NavGroup {

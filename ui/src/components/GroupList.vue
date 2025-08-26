@@ -40,9 +40,9 @@ async function computeGroupCounts() {
                 { params: { page: 1, size: 1, group: group.metadata.name } }
             );
             const count = data.total ?? (data.items?.length || 0);
-            group.status = { ...(group.status || {}), equipmentCount: count } as any;
+            group.status = { ...(group.status || {}), siteCount: count } as any;
         } catch (e) {
-            group.status = { ...(group.status || {}), equipmentCount: 0 } as any;
+            group.status = { ...(group.status || {}), siteCount: 0 } as any;
         }
     });
     await Promise.all(promises);
@@ -196,7 +196,7 @@ function onGroupEditingModalClose() {
                             <template #start>
                                 <VEntityField
                                         :title="group.spec?.name"
-                                        :description="`${group.status?.equipmentCount || 0} 个站点`"
+                                        :description="`${group.status?.siteCount || 0} 个站点`"
                                 ></VEntityField>
                             </template>
 
