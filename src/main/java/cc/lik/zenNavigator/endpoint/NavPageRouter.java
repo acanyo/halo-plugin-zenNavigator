@@ -112,6 +112,8 @@ public class NavPageRouter {
                 configMap.put("transparency", config.getTransparency() != null ? config.getTransparency() : 10);
                 configMap.put("enableSmart", config.getEnableSmart() != null ? config.getEnableSmart() : true);
                 configMap.put("content", config.getContent() != null ? config.getContent() : "");
+                boolean showCopyright = !(Boolean.TRUE.equals(config.getDisableCopyright()));
+                configMap.put("showCopyright", showCopyright);
                 return configMap;
             })
             .defaultIfEmpty(Map.of(
@@ -121,7 +123,8 @@ public class NavPageRouter {
                 "theme", "light",
                 "transparency", 10,
                 "enableSmart", true,
-                "content", ""
+                "content", "",
+                "showCopyright", true
             ));
     }
     

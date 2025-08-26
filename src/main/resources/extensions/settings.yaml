@@ -108,3 +108,10 @@ spec:
           language: html
           height: 200px
           help: 为空默认为欢迎语，支持 html 语法。
+        - $formkit: checkbox
+          label: 关闭版权声明
+          name: disableCopyright
+          id: disableCopyright
+          key: disableCopyright
+          value: false
+          help: 关闭后将隐藏页脚中的作者版权信息

@@ -16,5 +16,6 @@ public interface SettingConfigGetter {
         private Integer transparency;
         private Boolean enableSmart;
         private String content;
+        private Boolean disableCopyright;
     }
 }
