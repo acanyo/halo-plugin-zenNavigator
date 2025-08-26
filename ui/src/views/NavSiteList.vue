@@ -54,14 +54,17 @@ const {
         if (!selectedGroup.value) {
             return [] as NavSite[];
         }
-        const { data } = await axiosInstance.get<NavSiteList>("/apis/zenNavigator.lik.cc/v1alpha1/navsite", {
-            params: {
-                page: page.value,
-                size: size.value,
-                keyword: keyword.value,
-                group: selectedGroup.value,
-            },
-        });
+        const { data } = await axiosInstance.get<NavSiteList>(
+            "/apis/api.zenNavigator.lik.cc/v1alpha1/navsites",
+            {
+                params: {
+                    page: page.value,
+                    size: size.value,
+                    keyword: keyword.value,
+                    group: selectedGroup.value,
+                },
+            }
+        );
         total.value = data.total;
         return data.items
                 .map((site: NavSite) => site)

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { NavGroup, NavGroupList } from "../types/index";
+import type { NavGroup, NavGroupList, NavSiteList } from "../types/index";
 import { axiosInstance } from "@halo-dev/api-client";
 import {
     Dialog,
@@ -15,7 +15,7 @@ import {
 } from "@halo-dev/components";
 import { useQuery } from "@tanstack/vue-query";
 import { useRouteQuery } from "@vueuse/router";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { VueDraggable } from "vue-draggable-plus";
 import GroupEditingModal from "./GroupEditingModal.vue";
 
@@ -30,6 +30,23 @@ const updateGroup = ref<NavGroup>();
 const selectedGroup = useRouteQuery<string>("nav-group");
 
 const groups = ref<NavGroup[]>([]);
+
+async function computeGroupCounts() {
+    if (!groups.value?.length) return;
+    const promises = groups.value.map(async (group) => {
+        try {
+            const { data } = await axiosInstance.get<NavSiteList>(
+                "/apis/api.zenNavigator.lik.cc/v1alpha1/navsites",
+                { params: { page: 1, size: 1, group: group.metadata.name } }
+            );
+            const count = data.total ?? (data.items?.length || 0);
+            group.status = { ...(group.status || {}), equipmentCount: count } as any;
+        } catch (e) {
+            group.status = { ...(group.status || {}), equipmentCount: 0 } as any;
+        }
+    });
+    await Promise.all(promises);
+}
 
 const { refetch, isLoading } = useQuery<NavGroup[]>({
     queryKey: ["plugin:zen-navigator:groups"],
@@ -50,18 +67,18 @@ const { refetch, isLoading } = useQuery<NavGroup[]>({
         const hasDeletingGroup = data?.some((group) => !!group.metadata.deletionTimestamp);
         return hasDeletingGroup ? 1000 : false;
     },
-    onSuccess(data) {
+    async onSuccess(data) {
         groups.value = data;
+        await computeGroupCounts();
 
         if (selectedGroup.value) {
             const groupNames = data.map((group) => group.metadata.name);
             if (groupNames.includes(selectedGroup.value)) {
                 emit("select", selectedGroup.value);
-                return;
+            } else if (data.length) {
+                handleSelectedClick(data[0]);
             }
-        }
-
-        if (data.length) {
+        } else if (data.length) {
             handleSelectedClick(data[0]);
         } else {
             selectedGroup.value = "";
@@ -70,6 +87,15 @@ const { refetch, isLoading } = useQuery<NavGroup[]>({
     },
     refetchOnWindowFocus: false,
 });
+
+// compute counts when groups change (fallback)
+watch(
+    () => groups.value?.map(g => g.metadata.name).join(','),
+    async () => {
+        await computeGroupCounts();
+    },
+    { immediate: true }
+);
 
 const handleSaveInBatch = async () => {
     try {
@@ -85,7 +111,8 @@ const handleSaveInBatch = async () => {
     } catch (e) {
         console.error(e);
     } finally {
-        refetch();
+        await refetch();
+        await computeGroupCounts();
     }
 };
 
@@ -100,7 +127,8 @@ const handleDelete = async (group: NavGroup) => {
             } catch (e) {
                 console.error(e);
             } finally {
-                refetch();
+                await refetch();
+                await computeGroupCounts();
             }
         },
     });

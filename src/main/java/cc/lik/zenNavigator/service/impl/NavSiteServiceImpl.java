@@ -41,7 +41,7 @@ class NavSiteServiceImpl implements NavSiteService {
             builder.andQuery(QueryFactory.contains("spec.name", query.getKeyword()));
         }
         if (StringUtils.isNotBlank(query.getGroup())) {
-            builder.andQuery(QueryFactory.equal("spec.name", query.getGroup()));
+            builder.andQuery(QueryFactory.equal("spec.groupName", query.getGroup()));
         }
         return builder.build();
     }
